@@ -60,6 +60,13 @@ async function run() {
     const result = await cursor.toArray();
     res.send(result)
   })
+  // for teddy categories toys
+  app.get('/categories/teddy', async(req, res) =>{
+    const query = { category: "Teddy Toys"}
+    const cursor = toysCollection.find(query);
+    const result = await cursor.toArray();
+    res.send(result)
+  })
 
     // for single toys
     app.get('/addToys/:id', async(req, res) =>{
