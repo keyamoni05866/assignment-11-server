@@ -40,11 +40,38 @@ async function run() {
     })
     // for all toys
     app.get('/addToys', async(req, res) =>{
-
-      const cursor  = toysCollection.find();
+      const cursor  = toysCollection.find().limit(20);
       const result = await cursor.toArray();
       res.send(result)
     })
+
+   app.get('/myToys' , async(req, res) =>{
+       const sellerEmail = req.query.email;
+       const query = { sellerEmail };
+       const cursor = toysCollection.find(query);
+       const result = await cursor.toArray();
+       res.send(result)
+   })
+
+      // for specific users
+      
+      // app.get('/addToys', async(req, res) =>{
+      //   console.log(req.query.email)
+      // let query = {};
+      // if(req.query?.email){
+      //   query = {email: req.query.email}
+      // } 
+      //   const result = await toysCollection.find(query).toArray();
+      //   res.send(result)
+      // })
+      
+    // for elephant category
+    // app.get('/categories/:elephant', async(req, res) =>{
+    //   const query = { category: 'elephant' };
+    //   const cursor = toysCollection.find(query);
+    //   const result = await cursor.toArray();
+    //   res.send(result)
+    // })
     // for single toys
     app.get('/addToys/:id', async(req, res) =>{
       const id = req.params.id;
