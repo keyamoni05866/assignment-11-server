@@ -94,6 +94,28 @@ async function run() {
       res.send(result)
     })
 
+    app.put('/myToys/:id', async(req, res) =>{
+      const id = req.params.id;
+      const filter ={ _id: new ObjectId(id)}
+      const options = {upsert: true};
+      const updatedToy = req.body;
+      const toyInfo ={
+        $set:{
+          description: updatedToy.description,
+          productName: updatedToy.productName,
+          price: updatedToy.price,
+          quantity: updatedToy.quantity,
+          sellerName: updatedToy.sellerName,
+          photo: updatedToy.photo,
+          sellerEmail: updatedToy.sellerEmail,
+          rating: updatedToy.rating,
+          category: updatedToy.category
+        }
+      }
+      const result = await toysCollection.updateOne(filter, toyInfo, options)
+      res.send(result)
+    })
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
