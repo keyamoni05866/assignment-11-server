@@ -68,6 +68,13 @@ async function run() {
     res.send(result)
   })
 
+  // for unicorn categories toys
+  app.get('/categories/unicorn', async(req, res) =>{
+    const query = { category: "Unicorn Toys" }
+    const cursor = toysCollection.find(query);
+    const result = await cursor.toArray();
+    res.send(result)
+  })
     // for single toys
     app.get('/addToys/:id', async(req, res) =>{
       const id = req.params.id;
@@ -75,7 +82,13 @@ async function run() {
       const result = await toysCollection.findOne(query);
       res.send(result);
     })
-
+// delete operations
+app.delete('/myToys/:id' , async(req, res) =>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)}
+  const result = await toysCollection.deleteOne(query);
+  res.send(result)
+})
 
 
 
